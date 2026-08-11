@@ -1,37 +1,17 @@
-import express from "express";
-import cors from "cors";
-import connectDB from "./db.js";
-import Post from "./models/Post.js";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-// connectDB();
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
-app.get("/api/posts", async (req, res) => {
-  const posts = await Post.find();
-  res.json(posts);
-});
-
-app.get("/api/posts/:id", async (req, res) => {
-  const post = await Post.findById(req.params.id);
-  res.json(post);
-});
-
-app.post("/api/posts", async (req, res) => {
-  const newPost = new Post(req.body);
-  await newPost.save();
-  res.json(newPost);
-});
-
-app.put("/api/posts/:id", async (req, res) => {
-  const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(updatedPost);
-});
-
-app.delete("/api/posts/:id", async (req, res) => {
-  await Post.findByIdAndDelete(req.params.id);
-  res.json({ message: "Deleted" });
-});
-
-app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
